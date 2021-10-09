@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos</title>
+</head>
+
+<body>
+    <h1 style="text-align: center;">All Todos</h1>
+    <div style="margin-left: 5rem;">
+        <a href="/create-todo" style="display: block;">Create a new todo</a>
+        <% for( let index = 0; index < todos.length; index++ ) { %>
+            <input style="margin: 1rem; display: inline-block;" id="<%= todos[index]["_id"] %> " type="checkbox" <% if (todos[index]["completed"]) { %>
+            checked
+            <% } %>
+                >
+                <p style="margin: 1rem; display: inline-block;">
+                    <%= todos[index]["message"] %>
+                </p>
+                <a href="/todos/<%= todos[index]["_id"] %> " style="display: block;">More Info</a>
+                <% } %>
+    </div>
+<script>
+    const checkboxes = document.querySelectorAll("input[type=checkbox]");
+    checkboxes.forEach(checkbox=>{
+        checkbox.addEventListener("change", e => {
+            const endpoint = `/todos/${checkbox.id}`;
+            fetch(endpoint, {
+                method: "PATCH"
+            })
+                .then(response => response.json())
+                .then(data => window.location.href = data.redirect)
+                .catch(err => console.log(err))
+        })
+    })
+        
+</script>
+</body>
+
+</html>

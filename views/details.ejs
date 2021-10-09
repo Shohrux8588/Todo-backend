@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo</title>
+</head>
+
+<body>
+    <h1 style="text-align: center;">Todo</h1>
+    <a href="/todos" style="display: block;">All todos</a>
+    <input style="margin: 1rem; display: inline-block;" type="checkbox" id="<%= todo["_id"] %>"
+    <% if (todo["completed"]) { %>
+        checked
+        <% } %>
+            >
+            <p style="margin: 1rem; display: inline-block;">
+                <%= todo["message"] %>
+            </p>
+            <button class="delete" data-id="<%= todo["_id"] %>">Delete</button>
+
+            <script>
+                const deleteBtn = document.querySelector("button.delete");
+                deleteBtn.addEventListener("click", e => {
+                    const endpoint = `/todos/${deleteBtn.dataset.id}`;
+                    fetch(endpoint, {
+                        method: 'DELETE'
+                    })
+                        .then(response => response.json())
+                        .then(data => window.location.href = data.redirect)
+                        .catch(err => console.log(err))
+                })
+
+                const checkbox = document.querySelector("input[type=checkbox]");
+                checkbox.addEventListener("change", e => {
+                    const endpoint = `/todos/${checkbox.id}`;
+                    fetch(endpoint, {
+                        method: "PATCH"
+                    })
+                        .then(response => response.json())
+                        .then(data => window.location.href = data.redirect)
+                        .catch(err => console.log(err))
+                })
+            </script>
+</body>
+
+</html>
