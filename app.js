@@ -6,7 +6,7 @@ const app = express();
 
 // ---------------------------- Connection MongoDB Atlas with mongoose ------------------------
 // mongodb atlas connection url
-const dbURI = "mongodb+srv://shakhrukh:test1234@cluster0.jhlct.mongodb.net/node?retryWrites=true&w=majority";
+const dbURI = "";
 
 // connecting to mongodb atlas
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
